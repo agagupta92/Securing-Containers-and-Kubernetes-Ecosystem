@@ -1,0 +1,10 @@
+7. Factor5 Securing Kubernetes Cluster
+
+
+Cluster security goals
+
+-  We now know the security features and capabilities offered by Kubernetes. These feature allow developers and admins to establish security controls that protect your running pods. These features also play a significant role in protecting the rest of the Kubernetes infrastructure. These core components are not typically accessed by your application. They work behind the scenes to keep the cluster running. But how do you protect them? We have identified a few key goals, protect the API server traffic and the Kubernetes cluster components, prevent resource overuse, secure the Kubernetes network, and finally, the secrets. We will look at each one of them.
+
+Securing API server traffic
+
+- Authentication and role-based access control enable users and service accounts to communicate with the API Server. But remember, Kubernetes native components also frequently communicate with the API Server. Kubelets, kube-scheduler, kube-proxy, and kube-controller-manager must connect to API Server via a secure port. These clients must also authenticate themselves. Make sure that in the API Server specification file, the insecure-port parameter is set to zero. If you set up an API Server on the default insecure-port 8080, you are allowing attackers unencrypted access to the API Server. The secure-port parameter is used to serve HTTPS traffic. Ensure that its value, if defined, is between one and 65535. In addition, ensure that the insecure-bind-address doesn't exist. API Server should be configured to serve and accept only HTTPS traffic. That will require you to set up TLS, so check out the Kubernetes documentation on how to do that. Also, make sure in the API Server specification file, the client-ca-file parameter exists, and it points to the correct path of the file containing certificate authorities. Similarly, ensure that the parameters related to TLS certificate file and private keys are set appropriately.
